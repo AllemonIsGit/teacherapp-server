@@ -2,13 +2,13 @@ package com.example.TeacherAppServer.mapper;
 
 
 import com.example.TeacherAppServer.domain.dto.response.TeachingSessionResponse;
-import com.example.TeacherAppServer.domain.model.TeachingSession;
+import com.example.TeacherAppServer.domain.model.Session;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TeachingSessionMapper {
+public class SessionMapper {
 
-    public TeachingSessionResponse toTeachingSessionResponse(TeachingSession session) {
+    public TeachingSessionResponse toTeachingSessionResponse(Session session) {
         return TeachingSessionResponse.builder()
                 .sessionId(session.getSessionId())
                 .price(session.getPrice())

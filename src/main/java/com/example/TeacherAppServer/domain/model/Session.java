@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "sessions")
-public class TeachingSession {
+public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false, unique = true)
@@ -23,5 +23,5 @@ public class TeachingSession {
     @Column(nullable = false)
     private int price;
     @ManyToOne
-    private StudentSubject subject;
+    private Subject subject;
 }

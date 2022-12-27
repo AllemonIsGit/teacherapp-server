@@ -1,9 +1,11 @@
 package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateSessionRequest;
+import com.example.TeacherAppServer.domain.dto.request.PatchSessionRequest;
+import com.example.TeacherAppServer.domain.exception.SessionNotFoundException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
-import com.example.TeacherAppServer.domain.model.StudentSubject;
-import com.example.TeacherAppServer.domain.model.TeachingSession;
+import com.example.TeacherAppServer.domain.model.Subject;
+import com.example.TeacherAppServer.domain.model.Session;
 import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.repository.SessionRepository;
 import com.example.TeacherAppServer.repository.SubjectRepository;
@@ -22,10 +24,10 @@ public class SessionDaoService implements SessionService {
 
     @Override
     public void save(CreateSessionRequest session) {
-        StudentSubject subject = subjectRepository.findById(session.getSubjectId()).orElseThrow(() ->
+        Subject subject = subjectRepository.findById(session.getSubjectId()).orElseThrow(() ->
                 new SubjectNotFoundException("Subject not found."));
 
-        sessionRepository.save(TeachingSession.builder()
+        sessionRepository.save(Session.builder()
                 .price(subject.getPayPerSession())
                 .subject(subject)
                 .sessionDate(LocalDateTime.now())
@@ -33,42 +35,35 @@ public class SessionDaoService implements SessionService {
     }
 
     @Override
-    public List<TeachingSession> getUserSessions(String username) {
+    public List<Session> getUserSessions(String username) {
         return null;
     }
 
     @Override
-    public List<TeachingSession> getSubjectSessions(StudentSubject subject) {
+    public List<Session> getSubjectSessions(Subject subject) {
         return sessionRepository.findAllBySubject(subject);
     }
 
     @Override
-    public TeachingSession getSessionById(Integer id) {
+    public Session getSessionById(Integer id) {
         return null;
     }
 
-    //TODO forgive me for what i just did
     @Override
-    public List<TeachingSession> getAllByUser(User user) {
-//        List<StudentSubject> subjects = subjectRepository.findAllByUser(user);
-//
-//        if (subjects.size() == 0) {
-//            return null;
-//        }
-//
-//        else if (subjects.size() == 1) {
-//            return sessionRepository.findAllBySubject(subjects.get(0));
-//        }
-//
-//        else {
-//            List<TeachingSession> sessions = sessionRepository.findAllBySubject(subjects.get(0));
-//            for (int i = 1; i < subjects.size(); i++) {
-//                sessions.addAll(sessionRepository.findAllBySubject(subjects.get(i)));
-//            }
-//            return sessions;
-//        }
-
+    public List<Session> getAllByUser(User user) {
         return subjectRepository.findAllByUser(user)
                 .stream().flatMap(subject -> sessionRepository.findAllBySubject(subject).stream()).toList();
+    }
+
+    @Override
+    public void patchSession(Integer id, PatchSessionRequest patchSessionRequest) {
+        Session newSession = sessionRepository.findById(id)
+                .orElseThrow(() -> new SessionNotFoundException("Session not found."));
+
+        if (patchSessionRequest.getPrice() != null) {
+            newSession.setPrice(patchSessionRequest.getPrice());
+        }
+
+        sessionRepository.save(newSession);
     }
 }

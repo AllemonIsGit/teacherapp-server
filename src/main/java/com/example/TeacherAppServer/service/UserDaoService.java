@@ -1,8 +1,7 @@
 package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.response.UserDataResponse;
-import com.example.TeacherAppServer.domain.model.StudentSubject;
-import com.example.TeacherAppServer.domain.model.TeachingSession;
+import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.mapper.UserMapper;
 import com.example.TeacherAppServer.repository.SubjectRepository;
@@ -32,7 +31,7 @@ public class UserDaoService implements UserService {
 
     public UserDataResponse getUserData() {
         User user = authenticationService.getLoggedUser();
-        List<StudentSubject> subjects = subjectRepository.findAllByUser(user);
+        List<Subject> subjects = subjectRepository.findAllByUser(user);
         return userMapper.mapUserToResponseData(user, subjects);
     }
 }

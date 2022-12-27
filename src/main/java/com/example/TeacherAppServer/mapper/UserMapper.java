@@ -1,11 +1,8 @@
 package com.example.TeacherAppServer.mapper;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateUserRequest;
-import com.example.TeacherAppServer.domain.dto.response.StudentSubjectResponse;
-import com.example.TeacherAppServer.domain.dto.response.TeachingSessionResponse;
 import com.example.TeacherAppServer.domain.dto.response.UserDataResponse;
-import com.example.TeacherAppServer.domain.model.StudentSubject;
-import com.example.TeacherAppServer.domain.model.TeachingSession;
+import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +27,7 @@ public class UserMapper {
                 .build();
     }
 
-    public UserDataResponse mapUserToResponseData(User user, List<StudentSubject> subjects) {
+    public UserDataResponse mapUserToResponseData(User user, List<Subject> subjects) {
         return UserDataResponse.builder()
                 .nickname(user.getNickname())
                 .subjects(subjects.stream().map(subjectMapper::toStudentSubjectResponse).toList())

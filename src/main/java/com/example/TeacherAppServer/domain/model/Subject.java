@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudentSubject {
+public class Subject {
     @Id
     @Column(nullable = false, unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +28,5 @@ public class StudentSubject {
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "subject")
-    private List<TeachingSession> sessions;
+    private List<Session> sessions;
 }

@@ -3,7 +3,7 @@ package com.example.TeacherAppServer.service;
 import com.example.TeacherAppServer.domain.dto.request.CreateSubjectRequest;
 import com.example.TeacherAppServer.domain.exception.AccessForbiddenException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
-import com.example.TeacherAppServer.domain.model.StudentSubject;
+import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.mapper.SubjectMapper;
 import com.example.TeacherAppServer.repository.SubjectRepository;
@@ -20,19 +20,19 @@ public class SubjectDaoService implements SubjectService {
     @Override
     public void save(CreateSubjectRequest request) {
         final User loggedUser = authenticationService.getLoggedUser();
-        final StudentSubject subject = subjectMapper.mapRequestToSubject(request, loggedUser);
+        final Subject subject = subjectMapper.mapRequestToSubject(request, loggedUser);
         subjectRepository.save(subject);
     }
 
     @Override
-    public StudentSubject getSubjectById(Integer id) {
+    public Subject getSubjectById(Integer id) {
         return null;
     }
 
     @Override
     public void patchSubject(Integer id, CreateSubjectRequest createSubjectRequest) {
         User user = authenticationService.getLoggedUser();
-        StudentSubject newSubject = subjectRepository.findById(id)
+        Subject newSubject = subjectRepository.findById(id)
                 .orElseThrow(() -> new SubjectNotFoundException("Subject not found."));
         if (!user.equals(newSubject.getUser())) {
             throw new AccessForbiddenException("Forbidden.");
