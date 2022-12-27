@@ -2,6 +2,7 @@ package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateSessionRequest;
 import com.example.TeacherAppServer.domain.dto.request.PatchSessionRequest;
+import com.example.TeacherAppServer.domain.exception.AccessForbiddenException;
 import com.example.TeacherAppServer.domain.exception.SessionNotFoundException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
 import com.example.TeacherAppServer.domain.model.Subject;
@@ -10,6 +11,7 @@ import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.repository.SessionRepository;
 import com.example.TeacherAppServer.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -59,6 +61,9 @@ public class SessionDaoService implements SessionService {
     public void patchSession(Integer id, PatchSessionRequest patchSessionRequest) {
         Session newSession = sessionRepository.findById(id)
                 .orElseThrow(() -> new SessionNotFoundException("Session not found."));
+        if ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal() != newSession.getSubject().getUser()) {
+            throw new AccessForbiddenException("Forbidden.");
+        }
 
         if (patchSessionRequest.getPrice() != null) {
             newSession.setPrice(patchSessionRequest.getPrice());
