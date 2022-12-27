@@ -6,10 +6,7 @@ import com.example.TeacherAppServer.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -18,12 +15,17 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class SubjectController {
 
-    private final SubjectService service;
+    private final SubjectService subjectService;
 
     @PostMapping
     public ResponseEntity<String> createSubject(@RequestBody @Valid CreateSubjectRequest createSubjectRequest) {
-        service.save(createSubjectRequest);
+        subjectService.save(createSubjectRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("Subject Created");
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<String> patchSubject(@PathVariable Integer id, @RequestBody @Valid CreateSubjectRequest createSubjectRequest) {
+        subjectService.patchSubject(id, createSubjectRequest);
+        return ResponseEntity.status(HttpStatus.OK).body("Subject Patched");
     }
 
 }
