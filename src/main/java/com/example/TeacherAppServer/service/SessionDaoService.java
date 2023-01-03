@@ -5,13 +5,13 @@ import com.example.TeacherAppServer.domain.dto.request.PatchSessionRequest;
 import com.example.TeacherAppServer.domain.exception.AccessForbiddenException;
 import com.example.TeacherAppServer.domain.exception.SessionNotFoundException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
-import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.Session;
+import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.repository.SessionRepository;
 import com.example.TeacherAppServer.repository.SubjectRepository;
+import com.example.TeacherAppServer.utill.UserHelper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +22,7 @@ import java.util.List;
 public class SessionDaoService implements SessionService {
     private final SessionRepository sessionRepository;
     private final SubjectRepository subjectRepository;
+    private final UserHelper userHelper;
 
 
     @Override
@@ -61,7 +62,7 @@ public class SessionDaoService implements SessionService {
     public void patchSession(Integer id, PatchSessionRequest patchSessionRequest) {
         Session newSession = sessionRepository.findById(id)
                 .orElseThrow(() -> new SessionNotFoundException("Session not found."));
-        if ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal() != newSession.getSubject().getUser()) {
+        if (!userHelper.isOwnerOfSession(newSession)) {
             throw new AccessForbiddenException("Forbidden.");
         }
 

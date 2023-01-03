@@ -3,7 +3,7 @@ package com.example.TeacherAppServer.filter;
 import com.example.TeacherAppServer.domain.dto.request.LoginRequest;
 import com.example.TeacherAppServer.domain.dto.response.AuthenticationResponse;
 import com.example.TeacherAppServer.domain.model.User;
-import com.example.TeacherAppServer.token.JWTTokenUtil;
+import com.example.TeacherAppServer.utill.token.JWTTokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

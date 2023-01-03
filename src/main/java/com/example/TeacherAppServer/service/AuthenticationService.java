@@ -1,13 +1,13 @@
 package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateUserRequest;
-import com.example.TeacherAppServer.domain.exception.*;
-import com.example.TeacherAppServer.domain.model.User;
+import com.example.TeacherAppServer.domain.exception.InvalidCreateUserRequestException;
+import com.example.TeacherAppServer.domain.exception.NicknameNotProvidedException;
+import com.example.TeacherAppServer.domain.exception.PasswordsDoesNotMatchException;
+import com.example.TeacherAppServer.domain.exception.UsernameTakenException;
 import com.example.TeacherAppServer.mapper.UserMapper;
 import com.example.TeacherAppServer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -23,12 +23,6 @@ public class AuthenticationService {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
-
-    public User getLoggedUser() {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found."));
-    }
-
 
     public void register(CreateUserRequest createUserRequest) {
         validate(createUserRequest);

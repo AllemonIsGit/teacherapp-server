@@ -3,7 +3,7 @@ package com.example.TeacherAppServer.config;
 import com.example.TeacherAppServer.filter.JwtBasedAuthenticationFilter;
 import com.example.TeacherAppServer.filter.JwtBasedAuthorizationFilter;
 import com.example.TeacherAppServer.service.UserService;
-import com.example.TeacherAppServer.token.JWTTokenUtil;
+import com.example.TeacherAppServer.utill.token.JWTTokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.example.TeacherAppServer.token;
+package com.example.TeacherAppServer.utill.token;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

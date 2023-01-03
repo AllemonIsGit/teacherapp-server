@@ -2,7 +2,7 @@ package com.example.TeacherAppServer.filter;
 
 import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.service.UserService;
-import com.example.TeacherAppServer.token.JWTTokenUtil;
+import com.example.TeacherAppServer.utill.token.JWTTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
