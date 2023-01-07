@@ -2,15 +2,16 @@ package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateSessionRequest;
 import com.example.TeacherAppServer.domain.dto.request.PatchSessionRequest;
+import com.example.TeacherAppServer.domain.dto.response.SessionResponse;
 import com.example.TeacherAppServer.domain.exception.AccessForbiddenException;
 import com.example.TeacherAppServer.domain.exception.SessionNotFoundException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
 import com.example.TeacherAppServer.domain.model.Session;
 import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.User;
+import com.example.TeacherAppServer.mapper.SessionMapper;
 import com.example.TeacherAppServer.repository.SessionRepository;
 import com.example.TeacherAppServer.repository.SubjectRepository;
-import com.example.TeacherAppServer.utill.UserHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ import java.util.List;
 public class SessionDaoService implements SessionService {
     private final SessionRepository sessionRepository;
     private final SubjectRepository subjectRepository;
-    private final UserHelper userHelper;
+    private final UserContextService userContextService;
+    private final SessionMapper sessionMapper;
 
 
     @Override
@@ -35,11 +37,6 @@ public class SessionDaoService implements SessionService {
                 .subject(subject)
                 .sessionDate(LocalDateTime.now())
                 .build());
-    }
-
-    @Override
-    public List<Session> getUserSessions(String username) {
-        return null;
     }
 
     @Override
@@ -58,11 +55,17 @@ public class SessionDaoService implements SessionService {
                 .stream().flatMap(subject -> sessionRepository.findAllBySubject(subject).stream()).toList();
     }
 
+    public List<SessionResponse> getAllByUserAsResponse() {
+        List<Session> sessions  = subjectRepository.findAllByUser(userContextService.getLoggedOnUser())
+                .stream().flatMap(subject -> sessionRepository.findAllBySubject(subject).stream()).toList();
+        return sessionMapper.toSessionResponseList(sessions);
+    }
+
     @Override
     public void patchSession(Integer id, PatchSessionRequest patchSessionRequest) {
         Session newSession = sessionRepository.findById(id)
                 .orElseThrow(() -> new SessionNotFoundException("Session not found."));
-        if (!userHelper.isOwnerOfSession(newSession)) {
+        if (!userContextService.isOwnerOfSession(newSession)) {
             throw new AccessForbiddenException("Forbidden.");
         }
 

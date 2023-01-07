@@ -30,7 +30,7 @@ public class UserMapper {
     public UserDataResponse mapUserToResponseData(User user, List<Subject> subjects) {
         return UserDataResponse.builder()
                 .nickname(user.getNickname())
-                .subjects(subjects.stream().map(subjectMapper::toStudentSubjectResponse).toList())
+                .subjects(subjects.stream().map(subjectMapper::toSubjectResponse).toList())
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.TeacherAppServer.utill;
+package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.model.Session;
 import com.example.TeacherAppServer.domain.model.Subject;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserHelper {
+public class UserContextService {
     private final UserRepository userRepository;
 
     public User getLoggedOnUser() {

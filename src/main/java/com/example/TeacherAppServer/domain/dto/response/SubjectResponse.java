@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data
 @Builder
-public class StudentSubjectResponse {
+public class SubjectResponse {
     private Integer id;
     private String name;
     private Integer payPerSession;
-    private List<TeachingSessionResponse> sessions;
+    private List<SessionResponse> sessions;
 }

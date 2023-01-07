@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class UserDataResponse {
     private String nickname;
-    private List<StudentSubjectResponse> subjects;
+    private List<SubjectResponse> subjects;
 }

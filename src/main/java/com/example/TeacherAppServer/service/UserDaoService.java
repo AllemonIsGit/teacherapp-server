@@ -6,7 +6,6 @@ import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.mapper.UserMapper;
 import com.example.TeacherAppServer.repository.SubjectRepository;
 import com.example.TeacherAppServer.repository.UserRepository;
-import com.example.TeacherAppServer.utill.UserHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +20,7 @@ public class UserDaoService implements UserService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final UserMapper userMapper;
-    private final UserHelper userHelper;
+    private final UserContextService userContextService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,7 +29,7 @@ public class UserDaoService implements UserService {
     }
 
     public UserDataResponse getUserData() {
-        User user = userHelper.getLoggedOnUser();
+        User user = userContextService.getLoggedOnUser();
         List<Subject> subjects = subjectRepository.findAllByUser(user);
         return userMapper.mapUserToResponseData(user, subjects);
     }
