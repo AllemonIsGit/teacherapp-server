@@ -15,7 +15,7 @@ class UserMapperTest {
     @Test
     void mapRequestToUserTest() {
         //Given
-        SubjectMapper subjectMapper = new SubjectMapper(null, null, null);
+        SubjectMapper subjectMapper = new SubjectMapper(null);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         CreateUserRequest createUserRequest = new CreateUserRequest("Username", "Password", "Password", "Nickname");
         UserMapper userMapper = new UserMapper(passwordEncoder, subjectMapper);

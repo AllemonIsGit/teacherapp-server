@@ -15,10 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SubjectMapper {
-    private final SessionService sessionService;
     private final SessionMapper sessionMapper;
-    private final SubjectRepository subjectRepository;
-
 
     public Subject toSubject(CreateSubjectRequest request, User loggedUser) {
         return Subject.builder()
