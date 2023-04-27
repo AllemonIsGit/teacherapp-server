@@ -1,12 +1,16 @@
 package com.example.TeacherAppServer.config;
 
+import com.example.TeacherAppServer.filter.CorsFilter;
 import com.example.TeacherAppServer.filter.JwtBasedAuthenticationFilter;
 import com.example.TeacherAppServer.filter.JwtBasedAuthorizationFilter;
 import com.example.TeacherAppServer.service.UserService;
 import com.example.TeacherAppServer.utill.token.JWTTokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

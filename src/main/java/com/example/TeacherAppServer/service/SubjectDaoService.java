@@ -48,5 +48,13 @@ public class SubjectDaoService implements SubjectService {
         return subjectMapper.toSubjectResponseList(subjects);
     }
 
+    @Override
+    public void deleteById(int id) {
+        if (!subjectRepository.existsByIdAndUser(id, userContextService.getLoggedOnUser())) {
+            throw new AccessForbiddenException("Forbidden");
+        }
+        subjectRepository.deleteById(id);
+    }
+
 
 }

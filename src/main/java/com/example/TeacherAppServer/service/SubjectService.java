@@ -11,4 +11,5 @@ public interface SubjectService {
 
     void patchSubject (Integer id, CreateSubjectRequest createSubjectRequest);
     List<SubjectResponse> getSubjectsByUserAsResponse();
+    void deleteById(int id);
 }

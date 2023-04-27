@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     List<Subject> findAllByUser(User user);
+    boolean existsByIdAndUser(int id, User user);
 }
