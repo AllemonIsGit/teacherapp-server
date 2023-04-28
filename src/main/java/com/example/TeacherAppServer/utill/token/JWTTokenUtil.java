@@ -19,8 +19,8 @@ public class JWTTokenUtil {
         return JWT.create()
                 .withSubject(username)
                 .withIssuedAt(Date.from(Instant.now()))
-                .withIssuer("TicTacToe_Server")
-                .withExpiresAt(Date.from(Instant.now().plus(20000000, ChronoUnit.MINUTES)))
+                .withIssuer("TeacherApp")
+                .withExpiresAt(Date.from(Instant.now().plus(1440, ChronoUnit.MINUTES)))
                 .sign(algorithm);
     }
 
