@@ -29,4 +29,7 @@ public class Subject {
     private User user;
     @OneToMany(mappedBy = "subject")
     private List<Session> sessions;
+    @OneToMany(mappedBy = "subject")
+    private List<Lesson> lessons;
+
 }

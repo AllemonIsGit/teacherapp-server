@@ -4,8 +4,6 @@ import com.example.TeacherAppServer.domain.dto.request.CreateSubjectRequest;
 import com.example.TeacherAppServer.domain.dto.response.SubjectResponse;
 import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.domain.model.User;
-import com.example.TeacherAppServer.repository.SubjectRepository;
-import com.example.TeacherAppServer.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubjectMapper {
     private final SessionMapper sessionMapper;
+    private final LessonMapper lessonMapper;
 
     public Subject toSubject(CreateSubjectRequest request, User loggedUser) {
         return Subject.builder()
@@ -31,6 +30,7 @@ public class SubjectMapper {
                 .name(subject.getName())
                 .payPerSession(subject.getPayPerSession())
                 .sessions(subject.getSessions().stream().map(sessionMapper::toSessionResponse).toList())
+                .lessons(subject.getLessons().stream().map(lessonMapper::toLessonResponse).toList())
                 .build();
     }
 

@@ -25,6 +25,11 @@ public class SubjectDaoService implements SubjectService {
         subjectRepository.save(subject);
     }
 
+    public Subject getById(Integer id) {
+        return subjectRepository.findById(id).orElseThrow(() ->
+                new SubjectNotFoundException("Subject not found"));
+    }
+
     @Override
     public void patchSubject(Integer id, CreateSubjectRequest createSubjectRequest) {
         Subject newSubject = subjectRepository.findById(id)

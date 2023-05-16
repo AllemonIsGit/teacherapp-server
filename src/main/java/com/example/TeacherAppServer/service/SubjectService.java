@@ -2,7 +2,6 @@ package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateSubjectRequest;
 import com.example.TeacherAppServer.domain.dto.response.SubjectResponse;
-import com.example.TeacherAppServer.domain.model.Subject;
 
 import java.util.List;
 

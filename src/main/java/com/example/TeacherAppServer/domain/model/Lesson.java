@@ -1,10 +1,12 @@
 package com.example.TeacherAppServer.domain.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Data
 @NoArgsConstructor
@@ -23,8 +25,6 @@ public class Lesson {
     @Column(nullable = false)
     private Integer price;
     @Column(nullable = false)
-    private Integer subjectId;
-    @Column(nullable = false)
     private Integer durationInMinutes;
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -35,6 +35,7 @@ public class Lesson {
     @Column(nullable = false)
     private boolean cancelled;
     @ManyToOne
-    private User createdBy;
-
+    private User user;
+    @ManyToOne
+    private Subject subject;
 }

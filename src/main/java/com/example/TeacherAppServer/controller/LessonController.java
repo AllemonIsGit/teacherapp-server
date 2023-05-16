@@ -1,7 +1,7 @@
 package com.example.TeacherAppServer.controller;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateLessonRequest;
-import com.example.TeacherAppServer.service.LessonDaoService;
+import com.example.TeacherAppServer.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/lessons")
 @RequiredArgsConstructor
 public class LessonController {
-    private final LessonDaoService lessonService;
+    private final LessonService lessonService;
 
     @PostMapping
     public ResponseEntity<String> createLesson(@RequestBody @Valid CreateLessonRequest request) {

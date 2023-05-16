@@ -1,7 +1,6 @@
 package com.example.TeacherAppServer.controller;
 
 import com.example.TeacherAppServer.domain.dto.response.UserDataResponse;
-import com.example.TeacherAppServer.domain.model.User;
 import com.example.TeacherAppServer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

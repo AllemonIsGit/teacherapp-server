@@ -12,4 +12,5 @@ public class SubjectResponse {
     private String name;
     private Integer payPerSession;
     private List<SessionResponse> sessions;
+    private List<LessonResponse> lessons;
 }

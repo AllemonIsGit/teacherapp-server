@@ -3,7 +3,6 @@ package com.example.TeacherAppServer.controller;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateSubjectRequest;
 import com.example.TeacherAppServer.domain.dto.response.SubjectResponse;
-import com.example.TeacherAppServer.domain.model.Subject;
 import com.example.TeacherAppServer.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
