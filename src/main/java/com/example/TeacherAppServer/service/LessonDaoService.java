@@ -1,6 +1,7 @@
 package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateLessonRequest;
+import com.example.TeacherAppServer.domain.dto.request.CreateSubjectRequest;
 import com.example.TeacherAppServer.domain.exception.AccessForbiddenException;
 import com.example.TeacherAppServer.domain.exception.LessonNotFoundException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
@@ -10,7 +11,14 @@ import com.example.TeacherAppServer.mapper.LessonMapper;
 import com.example.TeacherAppServer.repository.LessonRepository;
 import com.example.TeacherAppServer.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
+
+import java.beans.FeatureDescriptor;
+import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -34,8 +42,15 @@ public class LessonDaoService implements LessonService {
     }
 
     @Override
-    public void patch(Integer id) {
+    public void put(Integer id, CreateLessonRequest request) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new LessonNotFoundException("Lesson not found."));
 
+
+        BeanUtils.copyProperties(request, lesson, getNullPropertyNames(request));
+        lesson.setUpdatedAt(LocalDateTime.now());
+
+        lessonRepository.save(lesson);
     }
 
     @Override
@@ -48,5 +63,14 @@ public class LessonDaoService implements LessonService {
         }
 
         lessonRepository.deleteById(id);
+    }
+
+    private String[] getNullPropertyNames(Object object) {
+        final BeanWrapper wrapper = new BeanWrapperImpl(object);
+
+        return Stream.of(wrapper.getPropertyDescriptors())
+                .map(FeatureDescriptor::getName)
+                .filter(propertyName -> wrapper.getPropertyValue(propertyName) == null)
+                .toArray(String[]::new);
     }
 }

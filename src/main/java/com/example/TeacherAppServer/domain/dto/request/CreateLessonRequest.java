@@ -15,4 +15,6 @@ public class CreateLessonRequest {
     private Integer durationInMinutes;
     private Integer amount;
     private Integer SubjectId;
+    private Boolean done;
+    private Boolean cancelled;
 }

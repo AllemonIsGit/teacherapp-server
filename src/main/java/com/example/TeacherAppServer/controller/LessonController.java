@@ -28,4 +28,11 @@ public class LessonController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Lesson deleted.");
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> PatchLesson(@PathVariable Integer id, @RequestBody @Valid CreateLessonRequest request) {
+        lessonService.put(id, request);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Lesson updated");
+    }
 }
