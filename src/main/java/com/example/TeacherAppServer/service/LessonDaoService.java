@@ -1,7 +1,6 @@
 package com.example.TeacherAppServer.service;
 
 import com.example.TeacherAppServer.domain.dto.request.CreateLessonRequest;
-import com.example.TeacherAppServer.domain.dto.request.CreateSubjectRequest;
 import com.example.TeacherAppServer.domain.exception.AccessForbiddenException;
 import com.example.TeacherAppServer.domain.exception.LessonNotFoundException;
 import com.example.TeacherAppServer.domain.exception.SubjectNotFoundException;
@@ -38,14 +37,19 @@ public class LessonDaoService implements LessonService {
             throw new AccessForbiddenException("Forbidden");
         }
 
-        lessonRepository.save(lessonMapper.toLesson(request));
+        Integer amount = request.getAmount();
+
+        for (int i = 0; i < amount; i++) {
+
+            request.setDate(request.getDate().plusWeeks(i));
+            lessonRepository.save(lessonMapper.toLesson(request));
+        }
     }
 
     @Override
     public void put(Integer id, CreateLessonRequest request) {
         Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
                 new LessonNotFoundException("Lesson not found."));
-
 
         BeanUtils.copyProperties(request, lesson, getNullPropertyNames(request));
         lesson.setUpdatedAt(LocalDateTime.now());
@@ -61,7 +65,6 @@ public class LessonDaoService implements LessonService {
         if (!userContextService.isOwnerOfLesson(lesson)) {
             throw new AccessForbiddenException("Forbidden");
         }
-
         lessonRepository.deleteById(id);
     }
 
